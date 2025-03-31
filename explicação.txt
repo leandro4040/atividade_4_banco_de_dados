@@ -1,0 +1,67 @@
+/*
+-- Inserindo dados na tabela paciente
+INSERT INTO PS.paciente (nome, data_nascimento, telefone, email, endereco, cpf) VALUES
+('Ana Silva', '1990-05-15', '11987654321', 'ana.silva@email.com', 'Rua das Flores, 123, São Paulo', '123.456.789-01'),
+('Carlos Oliveira', '1985-12-01', '21998765432', 'carlos.oliveira@email.com', 'Avenida Principal, 456, Rio de Janeiro', '987.654.321-02'),
+('Mariana Souza', '1992-03-20', '31988776655', 'mariana.souza@email.com', 'Rua da Praia, 789, Belo Horizonte', '456.789.012-03');
+
+-- Inserindo dados na tabela medico
+INSERT INTO PS.medico (nome, especialidade, telefone, email, crm) VALUES
+('Dr. Roberto Almeida', 'Cardiologia', '11999887766', 'roberto.almeida@email.com', 'CRM-SP 12345'),
+('Dra. Laura Mendes', 'Dermatologia', '21988776655', 'laura.mendes@email.com', 'CRM-RJ 67890'),
+('Dr. Paulo Santos', 'Ortopedia', '31977665544', 'paulo.santos@email.com', 'CRM-MG 13579');
+
+-- Inserindo dados na tabela pagamento
+INSERT INTO PS.pagamento (valor_pago, data_pagamento, metodo_pagamento) VALUES
+(150.00, '2025-03-31 09:00:00', 'Cartão de Crédito'),
+(200.00, '2025-03-30 16:30:00', 'Boleto Bancário'),
+(100.00, '2025-03-30 10:15:00', 'Pix');
+
+-- Inserindo dados na tabela servico
+INSERT INTO PS.servico (descricao, preco) VALUES
+('Consulta Cardiológica', 150.00),
+('Consulta Dermatológica', 200.00),
+('Sessão de Fisioterapia', 100.00);
+
+-- Inserindo dados na tabela ordem_servico
+INSERT INTO PS.ordem_servico (data_solicitacao, status, idpaciente, idmedico, idpagamento, idservico) VALUES
+('2025-03-31 08:00:00', 'Em andamento', 1, 1, 1, 1),
+('2025-03-30 15:00:00', 'Concluído', 2, 2, 2, 2),
+('2025-03-30 09:00:00', 'Concluído', 3, 3, 3, 3);
+
+SELECT 
+    os.idordem_servico AS ordem_servico_id,
+    p.nome AS paciente_nome,
+    m.nome AS medico_nome,
+    s.descricao AS servico_descricao,
+    pg.valor_pago,
+    os.status
+FROM 
+    ordem_servico os
+    INNER JOIN paciente p ON os.idpaciente = p.idpaciente
+    INNER JOIN medico m ON os.idmedico = m.idmedico
+    INNER JOIN servico s ON os.idservico = s.idservico
+    INNER JOIN pagamento pg ON os.idpagamento = pg.idpagamento;
+    
+    <---cmd ---> cd\
+ir onde está o --- c:\xampp\mysql\bin --- mysql.exe -h localhost -u root -p
+<---vai pedir senha--> a senha é em branco
+
+<---ver os schemas--->
+show databases;
+
+use PS;
+
+show tables;
+
+select * from medico;
+
+<---sair do banco--->
+quit 
+
+ c:\xampp\mysql\bin ---> -u root -p -c databases PS > d:\backup.sql
+<--senha em branco-->
+
+<---restaurar--->
+ c:\xampp\mysql\bin ---> -u root -p -c databases PS < d:\backup.sql
+*/
